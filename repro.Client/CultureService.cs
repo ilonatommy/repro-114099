@@ -4,7 +4,7 @@ namespace repro.Client.Services;
 
 public class CultureService
 {
-    public static IEnumerable<string> GetNeutralCultures()
+    public IEnumerable<string> GetNeutralCultures()
     {
         return CultureInfo
             .GetCultures(CultureTypes.NeutralCultures)

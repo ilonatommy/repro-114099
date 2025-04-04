@@ -1,4 +1,5 @@
 using repro.Client.Pages;
+using repro.Client.Services;
 using repro.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
+builder.Services.AddScoped<CultureService>();
 
 var app = builder.Build();
 

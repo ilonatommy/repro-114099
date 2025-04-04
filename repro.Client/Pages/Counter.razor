@@ -2,6 +2,7 @@
 @rendermode InteractiveWebAssembly
 @using System.Globalization;
 @using repro.Client.Services;
+@inject CultureService Service;
 
 <PageTitle>Counter</PageTitle>
 
@@ -50,7 +51,7 @@
             .AsEnumerable();
 
         // DI-based cultures list
-        culturesDI = CultureService.GetNeutralCultures();
+        culturesDI = Service.GetNeutralCultures();
 
         // Compare the two lists
         if (cultures != null && culturesDI != null)
