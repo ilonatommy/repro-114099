@@ -1,0 +1,65 @@
+﻿@page "/counter"
+@rendermode InteractiveWebAssembly
+@using System.Globalization;
+@using repro.Client.Services;
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@if (cultures != null && culturesDI != null)
+{
+    <p>Are cultures and culturesDI the same? @areEqual</p>
+
+    <h4>cultures:</h4>
+    <ul>
+        @foreach (var culture in cultures)
+        {
+            <li>@culture</li>
+        }
+    </ul>
+
+    <h4>culturesDI:</h4>
+    <ul>
+        @foreach (var culture in culturesDI)
+        {
+            <li>@culture</li>
+        }
+    </ul>
+}
+
+
+@code{
+    private int currentCount = 0;
+    private IEnumerable<string>? cultures;
+    private IEnumerable<string>? culturesDI;
+    private bool areEqual;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+
+        // Original cultures list
+        cultures = CultureInfo
+            .GetCultures(types: CultureTypes.NeutralCultures)
+            .Select(selector: cultureInfo => cultureInfo.Name)
+            .AsEnumerable();
+
+        // DI-based cultures list
+        culturesDI = CultureService.GetNeutralCultures();
+
+        // Compare the two lists
+        if (cultures != null && culturesDI != null)
+        {
+            areEqual = cultures.SequenceEqual(culturesDI);
+        }
+        else
+        {
+            areEqual = false;
+        }
+    }
+}
